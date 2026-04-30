@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SPgroup - CCS Routine Inspection General Checklist</title>
+  <title>CCS Routine Inspection General Checklist</title>
   <script src="https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.2/dist/browser-image-compression.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.5/dist/signature_pad.umd.min.js"></script>
   <style>
     :root {
@@ -42,12 +41,6 @@
       margin-bottom: 2rem;
       padding-bottom: 1rem;
       border-bottom: 3px solid var(--sp-blue);
-    }
-    
-    .logo {
-      max-width: 220px;
-      height: auto;
-      margin-bottom: 1rem;
     }
     
     .form-title {
@@ -439,35 +432,18 @@
       min-width: 200px;
     }
     
-    .btn:hover:not(:disabled) {
+    .btn:hover {
       transform: translateY(-2px);
     }
     
-    .btn-submit {
-      background: linear-gradient(135deg, var(--sp-blue) 0%, var(--sp-teal) 100%);
+    .btn-print {
+      background: var(--sp-blue);
       color: white;
       box-shadow: 0 4px 12px rgba(0,102,179,0.3);
     }
     
-    .btn-submit:hover:not(:disabled) {
+    .btn-print:hover {
       box-shadow: 0 6px 16px rgba(0,102,179,0.4);
-    }
-    
-    .btn-download-pdf {
-      background: var(--danger);
-      color: white;
-      box-shadow: 0 4px 12px rgba(220,53,69,0.3);
-    }
-    
-    .btn-print {
-      background: var(--gray);
-      color: white;
-      box-shadow: 0 4px 12px rgba(108,117,125,0.3);
-    }
-    
-    .btn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
     }
     
     #status {
@@ -481,7 +457,6 @@
     
     #status.success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
     #status.error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
-    #status.loading { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
     
     @media (max-width: 768px) {
       .form-container { padding: 1rem; }
@@ -490,41 +465,29 @@
       .item-header { grid-template-columns: 1fr; }
       .status-buttons { justify-content: flex-start; }
       .signature-grid { grid-template-columns: 1fr; gap: 1rem; }
-      .action-buttons { flex-direction: column; }
       .btn { width: 100%; min-width: auto; }
     }
     
     @media print {
       body { background: white; }
-      .form-container { box-shadow: none; }
+      .form-container { box-shadow: none; padding: 1rem; }
       .btn, .photo-upload-label, .btn-add-photo, .btn-remove-photo, .signature-actions { display: none !important; }
       .photo-entry { break-inside: avoid; }
       .photo-upload-input { display: none !important; }
+      .inspection-item { break-inside: avoid; }
     }
   </style>
 </head>
 <body>
   <div class="form-container">
     <div class="header">
-      <!-- Inline SVG Logo - Never breaks -->
-      <svg class="logo" viewBox="0 0 280 80" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style="stop-color:#0066b3;stop-opacity:1" />
-            <stop offset="100%" style="stop-color:#00a9ce;stop-opacity:1" />
-          </linearGradient>
-        </defs>
-        <circle cx="40" cy="40" r="35" fill="url(#logoGradient)"/>
-        <path d="M 25 40 Q 40 25 55 40 Q 40 55 25 40" fill="white" opacity="0.9"/>
-        <text x="90" y="48" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#0066b3">SPgroup</text>
-      </svg>
       <h1 class="form-title">CCS Routine Inspection General Checklist</h1>
     </div>
     
     <div class="info-grid">
       <div class="info-field">
-        <label>District *</label>
-        <select id="district" required>
+        <label>District</label>
+        <select id="district">
           <option value="">Select District</option>
           <option value="PL">PL</option>
           <option value="GA">GA</option>
@@ -536,20 +499,20 @@
         <input type="text" id="cluster" placeholder="e.g., 4A">
       </div>
       <div class="info-field">
-        <label>Block *</label>
-        <input type="text" id="block" placeholder="e.g., 111A" required>
+        <label>Block</label>
+        <input type="text" id="block" placeholder="e.g., 111A">
       </div>
       <div class="info-field">
         <label>CCS</label>
         <input type="text" id="ccs" placeholder="CCS Number">
       </div>
       <div class="info-field">
-        <label>Date / Time *</label>
-        <input type="datetime-local" id="datetime" required>
+        <label>Date / Time</label>
+        <input type="datetime-local" id="datetime">
       </div>
       <div class="info-field">
-        <label>Inspector Email *</label>
-        <input type="email" id="inspector-email" placeholder="inspector@spgroup.com.sg" required>
+        <label>Inspector Name</label>
+        <input type="text" id="inspector-name" placeholder="Inspector Name">
       </div>
     </div>
     
@@ -733,11 +696,11 @@
     <div class="signature-section">
       <div class="signature-grid">
         <div class="signature-field">
-          <label>Reported by: *</label>
-          <input type="text" id="reported-by" placeholder="Full Name" required>
+          <label>Reported by:</label>
+          <input type="text" id="reported-by" placeholder="Full Name">
         </div>
         <div class="signature-field">
-          <label>Digital Signature: *</label>
+          <label>Digital Signature:</label>
           <div class="signature-canvas-wrapper">
             <canvas id="signature-canvas" class="signature-canvas"></canvas>
           </div>
@@ -752,8 +715,6 @@
     </div>
     
     <div class="action-buttons">
-      <button type="button" id="submit-btn" class="btn btn-submit" onclick="submitForm()">📤 Submit via Email</button>
-      <button type="button" id="download-pdf-btn" class="btn btn-download-pdf" onclick="downloadPDF()">📄 Download PDF</button>
       <button type="button" class="btn btn-print" onclick="window.print()">🖨️ Print to PDF</button>
     </div>
     
@@ -761,9 +722,6 @@
   </div>
   
   <script>
-    // ✅ YOUR FORMSPREE ENDPOINT
-    const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mqenznaz';
-    
     // Initialize datetime
     document.getElementById('datetime').value = new Date().toISOString().slice(0, 16);
     
@@ -877,9 +835,6 @@
             document.getElementById('signature-confirmation').classList.add('visible');
           }
         };
-      } else {
-        console.error('SignaturePad library failed to load');
-        document.getElementById('signature-canvas').parentElement.innerHTML = '<p style="color: red;">Signature pad failed to load. Please refresh.</p>';
       }
     }
     
@@ -910,185 +865,6 @@
         signaturePad.fromData(data);
       }
     });
-    
-    // Form submission
-    async function submitForm() {
-      const statusDiv = document.getElementById('status');
-      const submitBtn = document.getElementById('submit-btn');
-      
-      // Validation
-      const requiredFields = ['district', 'block', 'datetime', 'inspector-email', 'reported-by'];
-      let isValid = true;
-      
-      requiredFields.forEach(fieldId => {
-        const field = document.getElementById(fieldId);
-        if (!field.value.trim()) {
-          field.style.borderColor = 'var(--danger)';
-          isValid = false;
-        } else {
-          field.style.borderColor = '#ced4da';
-        }
-      });
-      
-      if (!signaturePad || signaturePad.isEmpty()) {
-        isValid = false;
-        document.querySelector('.signature-canvas-wrapper').style.borderColor = 'var(--danger)';
-      } else {
-        document.querySelector('.signature-canvas-wrapper').style.borderColor = '#ced4da';
-      }
-      
-      if (!isValid) {
-        showStatus('❌ Please fill in all required fields marked with * and provide a signature', 'error');
-        return;
-      }
-      
-      showStatus('📤 Preparing and sending inspection report...', 'loading');
-      submitBtn.disabled = true;
-      
-      try {
-        const formData = new FormData();
-        
-        // Add header info
-        formData.append('_subject', `CCS Inspection - Block ${document.getElementById('block').value} - ${document.getElementById('datetime').value}`);
-        formData.append('_replyto', document.getElementById('inspector-email').value);
-        formData.append('district', document.getElementById('district').value);
-        formData.append('cluster', document.getElementById('cluster').value || 'N/A');
-        formData.append('block', document.getElementById('block').value);
-        formData.append('ccs', document.getElementById('ccs').value || 'N/A');
-        formData.append('datetime', document.getElementById('datetime').value);
-        formData.append('inspector_email', document.getElementById('inspector-email').value);
-        formData.append('reported_by', document.getElementById('reported-by').value);
-        formData.append('additional_remarks', document.getElementById('additional-remarks').value || 'None');
-        
-        // Add signature
-        if (signaturePad && !signaturePad.isEmpty()) {
-          const signatureBlob = await new Promise(resolve => {
-            signatureCanvas.toBlob(resolve, 'image/png');
-          });
-          formData.append('signature', signatureBlob, 'signature.png');
-        }
-        
-        // Add inspection items
-        document.querySelectorAll('.inspection-item').forEach(item => {
-          const itemNum = item.dataset.item;
-          const statusBtn = item.querySelector('.status-btn.active');
-          const remarks = document.getElementById(`remarks-${itemNum}`).value;
-          
-          formData.append(`item_${itemNum}_status`, statusBtn ? statusBtn.dataset.status : 'Not Assessed');
-          formData.append(`item_${itemNum}_remarks`, remarks || 'No remarks');
-          
-          // Add photos for this item
-          const photoEntries = item.querySelectorAll('.photo-entry');
-          photoEntries.forEach((entry, index) => {
-            const file = entry._compressedFile;
-            const comment = entry.querySelector('.photo-comment-input').value;
-            
-            if (file) {
-              formData.append(`item_${itemNum}_photo_${index + 1}`, file);
-              formData.append(`item_${itemNum}_photo_${index + 1}_comment`, comment || 'No comment');
-            }
-          });
-        });
-        
-        const response = await fetch(FORMSPREE_ENDPOINT, {
-          method: 'POST',
-          body: formData,
-          headers: { 'Accept': 'application/json' }
-        });
-        
-        if (response.ok) {
-          showStatus('✅ Inspection report submitted successfully! A copy has been sent to your email.', 'success');
-          setTimeout(() => {
-            if (confirm('Submit another inspection?')) {
-              location.reload();
-            }
-          }, 3000);
-        } else {
-          throw new Error('Submission failed');
-        }
-      } catch (err) {
-        console.error('Submission error:', err);
-        showStatus('❌ Failed to submit. Please check your connection and try again.', 'error');
-        submitBtn.disabled = false;
-      }
-    }
-    
-    // Download PDF
-    async function downloadPDF() {
-      const btn = document.getElementById('download-pdf-btn');
-      const statusDiv = document.getElementById('status');
-      
-      // Hide action buttons temporarily
-      const actionButtons = document.querySelector('.action-buttons');
-      const photoUploadLabels = document.querySelectorAll('.photo-upload-label');
-      const addPhotoBtns = document.querySelectorAll('.btn-add-photo');
-      const removePhotoBtns = document.querySelectorAll('.btn-remove-photo');
-      const signatureActions = document.querySelector('.signature-actions');
-      
-      actionButtons.style.display = 'none';
-      photoUploadLabels.forEach(el => el.style.display = 'none');
-      addPhotoBtns.forEach(el => el.style.display = 'none');
-      removePhotoBtns.forEach(el => el.style.display = 'none');
-      if (signatureActions) signatureActions.style.display = 'none';
-      
-      // Show signature confirmation if exists
-      if (signaturePad && !signaturePad.isEmpty()) {
-        document.getElementById('signature-confirmation').classList.add('visible');
-      }
-      
-      // Wait for repaint
-      await new Promise(resolve => setTimeout(resolve, 200));
-      
-      showStatus('📄 Generating PDF...', 'loading');
-      btn.disabled = true;
-      
-      try {
-        const element = document.querySelector('.form-container');
-        const opt = {
-          margin: 0.5,
-          filename: `CCS_Inspection_${document.getElementById('block').value}_${new Date().toISOString().slice(0,10)}.pdf`,
-          image: { type: 'jpeg', quality: 0.95 },
-          html2canvas: { 
-            scale: 1.5, 
-            useCORS: true, 
-            logging: false,
-            allowTaint: false
-          },
-          jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-        };
-        
-        await html2pdf().set(opt).from(element).save();
-        showStatus('✅ PDF downloaded successfully!', 'success');
-      } catch (err) {
-        console.error('PDF generation failed:', err);
-        showStatus('❌ PDF generation failed. Try Print to PDF instead.', 'error');
-      } finally {
-        // Restore UI
-        actionButtons.style.display = 'flex';
-        photoUploadLabels.forEach(el => el.style.display = 'block');
-        addPhotoBtns.forEach(el => el.style.display = 'block');
-        removePhotoBtns.forEach(el => el.style.display = 'block');
-        if (signatureActions) signatureActions.style.display = 'flex';
-        btn.disabled = false;
-        
-        setTimeout(() => {
-          statusDiv.style.display = 'none';
-        }, 5000);
-      }
-    }
-    
-    function showStatus(message, type) {
-      const statusDiv = document.getElementById('status');
-      statusDiv.textContent = message;
-      statusDiv.className = type;
-      statusDiv.style.display = 'block';
-      
-      if (type !== 'loading') {
-        setTimeout(() => {
-          statusDiv.style.display = 'none';
-        }, 8000);
-      }
-    }
   </script>
 </body>
 </html>
