@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SPgroup - CCS Routine Inspection General Checklist</title>
+  <script src="https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.2/dist/browser-image-compression.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.5/dist/signature_pad.umd.min.js"></script>
+  <style>
+    :root {
+      --sp-blue: #0066b3;
+      --sp-teal: #00a9ce;
+      --success: #28a745;
+      --danger: #dc3545;
+      --warning: #ffc107;
+      --gray: #6c757d;
+      --light-gray: #f8f9fa;
+    }
+    
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 950px;
+      margin: 0 auto;
+      padding: 1rem;
+      background: #f0f4f8;
+      color: #333;
+      line-height: 1.6;
+    }
+    
+    .form-container {
+      background: white;
+      border-radius: 8px;
+      padding: 2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 3px solid var(--sp-blue);
+    }
+    
+    .logo {
+      max-width: 220px;
+      height: auto;
+      margin-bottom: 1rem;
+    }
+    
+    .form-title {
+      color: var(--sp-blue);
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+      padding: 1rem;
+      background: var(--light-gray);
+      border-radius: 6px;
+    }
+    
+    .info-field {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .info-field label {
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--sp-blue);
+      margin-bottom: 0.3rem;
+    }
+    
+    .info-field input, .info-field select, .info-field textarea {
+      padding: 0.5rem;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      font-family: inherit;
+    }
+    
+    .info-field input:focus, .info-field select:focus, .info-field textarea:focus {
+      outline: none;
+      border-color: var(--sp-teal);
+      box-shadow: 0 0 0 3px rgba(0,169,206,0.1);
+    }
+    
+    .inspection-item {
+      background: white;
+      border: 2px solid #e9ecef;
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+      transition: all 0.3s ease;
+    }
+    
+    .inspection-item:hover {
+      border-color: var(--sp-teal);
+      box-shadow: 0 2px 8px rgba(0,169,206,0.1);
+    }
+    
+    .item-header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      align-items: center;
+    }
+    
+    .item-title {
+      font-weight: 700;
+      color: var(--sp-blue);
+      font-size: 1.05rem;
+    }
+    
+    .status-buttons { display: flex; gap: 0.5rem; }
+    
+    .status-btn {
+      padding: 0.4rem 1rem;
+      border: 2px solid #dee2e6;
+      border-radius: 20px;
+      background: white;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+    
+    .status-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .status-btn.pass { background: #d4edda; border-color: var(--success); color: #155724; }
+    .status-btn.fail { background: #f8d7da; border-color: var(--danger); color: #721c24; }
+    .status-btn.na { background: #fff3cd; border-color: var(--warning); color: #856404; }
+    
+    .status-btn.active.pass { background: var(--success); color: white; }
+    .status-btn.active.fail { background: var(--danger); color: white; }
+    .status-btn.active.na { background: var(--warning); color: #333; }
+    
+    .task-description {
+      color: var(--gray);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      padding: 0.5rem;
+      background: var(--light-gray);
+      border-radius: 4px;
+      border-left: 3px solid var(--sp-teal);
+    }
+    
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 1rem;
+    }
+    
+    .field-group label {
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-bottom: 0.3rem;
+      color: #495057;
+    }
+    
+    .field-group textarea {
+      padding: 0.6rem;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      resize: vertical;
+      min-height: 60px;
+    }
+    
+    .photo-section {
+      background: var(--light-gray);
+      border-radius: 6px;
+      padding: 1rem;
+      margin-top: 1rem;
+    }
+    
+    .photo-section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+    
+    .photo-section-title {
+      font-weight: 600;
+      color: var(--sp-blue);
+      font-size: 0.9rem;
+    }
+    
+    .btn-add-photo {
+      background: var(--sp-teal);
+      color: white;
+      border: none;
+      padding: 0.4rem 0.8rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    
+    .btn-add-photo:hover { background: #0095b8; transform: translateY(-1px); }
+    
+    .photo-entry {
+      background: white;
+      border: 1px solid #dee2e6;
+      border-radius: 6px;
+      padding: 0.75rem;
+      margin-bottom: 0.75rem;
+      position: relative;
+    }
+    
+    .btn-remove-photo {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      background: var(--danger);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+    
+    .btn-remove-photo:hover { background: #c82333; }
+    
+    .photo-upload-wrapper { margin-bottom: 0.5rem; }
+    
+    .photo-upload-label {
+      display: block;
+      padding: 0.75rem;
+      border: 2px dashed #ced4da;
+      border-radius: 6px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      background: #fafbfc;
+    }
+    
+    .photo-upload-label:hover {
+      border-color: var(--sp-teal);
+      background: #e7f3f8;
+    }
+    
+    .photo-upload-input { display: none; }
+    
+    .upload-icon { font-size: 1.5rem; margin-bottom: 0.25rem; }
+    
+    .upload-text { color: var(--gray); font-size: 0.8rem; }
+    
+    .photo-preview {
+      margin-top: 0.5rem;
+      display: none;
+      text-align: center;
+    }
+    
+    .photo-preview img {
+      max-width: 100%;
+      max-height: 200px;
+      border-radius: 4px;
+      border: 1px solid #dee2e6;
+    }
+    
+    .photo-info {
+      font-size: 0.8rem;
+      color: var(--gray);
+      margin-top: 0.25rem;
+    }
+    
+    .photo-comment {
+      margin-top: 0.5rem;
+    }
+    
+    .photo-comment label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #495057;
+    }
+    
+    .photo-comment textarea {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 0.85rem;
+      min-height: 40px;
+      resize: vertical;
+    }
+    
+    .compressing {
+      color: var(--warning);
+      font-weight: 600;
+      animation: pulse 1.5s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+    
+    .additional-remarks {
+      background: var(--light-gray);
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin: 2rem 0;
+    }
+    
+    .additional-remarks label {
+      font-weight: 700;
+      color: var(--sp-blue);
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    
+    .additional-remarks textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      min-height: 80px;
+      resize: vertical;
+    }
+    
+    .signature-section {
+      margin: 2rem 0;
+      padding-top: 2rem;
+      border-top: 2px solid #dee2e6;
+    }
+    
+    .signature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    
+    .signature-field { display: flex; flex-direction: column; }
+    
+    .signature-field label {
+      font-weight: 700;
+      color: var(--sp-blue);
+      margin-bottom: 0.5rem;
+    }
+    
+    .signature-field input {
+      padding: 0.75rem;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+    
+    .signature-canvas-wrapper {
+      position: relative;
+      border: 2px solid #ced4da;
+      border-radius: 6px;
+      background: white;
+      overflow: hidden;
+    }
+    
+    .signature-canvas {
+      width: 100%;
+      height: 150px;
+      touch-action: none;
+      cursor: crosshair;
+      display: block;
+    }
+    
+    .signature-actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+    
+    .btn-clear-signature {
+      background: var(--gray);
+      color: white;
+      border: none;
+      padding: 0.4rem 0.8rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+    
+    .btn-clear-signature:hover { background: #5a6268; }
+    
+    .signature-confirmation {
+      display: none;
+      margin-top: 0.5rem;
+      padding: 0.5rem;
+      background: #d4edda;
+      border: 1px solid #c3e6cb;
+      border-radius: 4px;
+      color: #155724;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    
+    .signature-confirmation.visible { display: block; }
+    
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .btn {
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 700;
+      transition: all 0.3s;
+      min-width: 200px;
+    }
+    
+    .btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+    }
+    
+    .btn-submit {
+      background: linear-gradient(135deg, var(--sp-blue) 0%, var(--sp-teal) 100%);
+      color: white;
+      box-shadow: 0 4px 12px rgba(0,102,179,0.3);
+    }
+    
+    .btn-submit:hover:not(:disabled) {
+      box-shadow: 0 6px 16px rgba(0,102,179,0.4);
+    }
+    
+    .btn-download-pdf {
+      background: var(--danger);
+      color: white;
+      box-shadow: 0 4px 12px rgba(220,53,69,0.3);
+    }
+    
+    .btn-print {
+      background: var(--gray);
+      color: white;
+      box-shadow: 0 4px 12px rgba(108,117,125,0.3);
+    }
+    
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    
+    #status {
+      display: none;
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 6px;
+      font-weight: 600;
+      text-align: center;
+    }
+    
+    #status.success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+    #status.error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+    #status.loading { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+    
+    @media (max-width: 768px) {
+      .form-container { padding: 1rem; }
+      .form-title { font-size: 1.2rem; }
+      .info-grid { grid-template-columns: 1fr; }
+      .item-header { grid-template-columns: 1fr; }
+      .status-buttons { justify-content: flex-start; }
+      .signature-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .action-buttons { flex-direction: column; }
+      .btn { width: 100%; min-width: auto; }
+    }
+    
+    @media print {
+      body { background: white; }
+      .form-container { box-shadow: none; }
+      .btn, .photo-upload-label, .btn-add-photo, .btn-remove-photo, .signature-actions { display: none !important; }
+      .photo-entry { break-inside: avoid; }
+      .photo-upload-input { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <div class="header">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/SP_Group_logo.svg/1200px-SP_Group_logo.svg.png" 
+           alt="SPgroup Logo" 
+           class="logo"
+           onerror="this.src='https://www.spgroup.com.sg/content/dam/spgroup/images/logo.png'; this.onerror=null;">
+      <h1 class="form-title">CCS Routine Inspection General Checklist</h1>
+    </div>
+    
+    <div class="info-grid">
+      <div class="info-field">
+        <label>District *</label>
+        <select id="district" required>
+          <option value="">Select District</option>
+          <option value="PL">PL</option>
+          <option value="GA">GA</option>
+          <option value="PK">PK</option>
+        </select>
+      </div>
+      <div class="info-field">
+        <label>Cluster</label>
+        <input type="text" id="cluster" placeholder="e.g., 4A">
+      </div>
+      <div class="info-field">
+        <label>Block *</label>
+        <input type="text" id="block" placeholder="e.g., 111A" required>
+      </div>
+      <div class="info-field">
+        <label>CCS</label>
+        <input type="text" id="ccs" placeholder="CCS Number">
+      </div>
+      <div class="info-field">
+        <label>Date / Time *</label>
+        <input type="datetime-local" id="datetime" required>
+      </div>
+      <div class="info-field">
+        <label>Inspector Email *</label>
+        <input type="email" id="inspector-email" placeholder="inspector@spgroup.com.sg" required>
+      </div>
+    </div>
+    
+    <div id="inspection-items">
+      
+      <!-- Item 1: Security -->
+      <div class="inspection-item" data-item="1">
+        <div class="item-header">
+          <div class="item-title">1. Security</div>
+          <div class="status-buttons">
+            <button type="button" class="status-btn pass" data-status="Pass">Pass</button>
+            <button type="button" class="status-btn fail" data-status="Fail">Fail</button>
+            <button type="button" class="status-btn na" data-status="N/A">N/A</button>
+          </div>
+        </div>
+        <div class="task-description">Check roof access doors.</div>
+        <div class="field-group">
+          <label>Remarks:</label>
+          <textarea id="remarks-1" placeholder="Enter observations..."></textarea>
+        </div>
+        <div class="photo-section">
+          <div class="photo-section-header">
+            <span class="photo-section-title">Photos & Comments:</span>
+            <button type="button" class="btn-add-photo" onclick="addPhoto(1)">+ Add Photo</button>
+          </div>
+          <div id="photos-1"></div>
+        </div>
+      </div>
+      
+      <!-- Item 2: Roof Lighting -->
+      <div class="inspection-item" data-item="2">
+        <div class="item-header">
+          <div class="item-title">2. Roof Lighting</div>
+          <div class="status-buttons">
+            <button type="button" class="status-btn pass" data-status="Pass">Pass</button>
+            <button type="button" class="status-btn fail" data-status="Fail">Fail</button>
+            <button type="button" class="status-btn na" data-status="N/A">N/A</button>
+          </div>
+        </div>
+        <div class="task-description">Check roof area lighting.</div>
+        <div class="field-group">
+          <label>Remarks:</label>
+          <textarea id="remarks-2" placeholder="Enter observations..."></textarea>
+        </div>
+        <div class="photo-section">
+          <div class="photo-section-header">
+            <span class="photo-section-title">Photos & Comments:</span>
+            <button type="button" class="btn-add-photo" onclick="addPhoto(2)">+ Add Photo</button>
+          </div>
+          <div id="photos-2"></div>
+        </div>
+      </div>
+      
+      <!-- Item 3: Work Access -->
+      <div class="inspection-item" data-item="3">
+        <div class="item-header">
+          <div class="item-title">3. Work Access</div>
+          <div class="status-buttons">
+            <button type="button" class="status-btn pass" data-status="Pass">Pass</button>
+            <button type="button" class="status-btn fail" data-status="Fail">Fail</button>
+            <button type="button" class="status-btn na" data-status="N/A">N/A</button>
+          </div>
+        </div>
+        <div class="task-description">Check roof work access platforms and railings.</div>
+        <div class="field-group">
+          <label>Remarks:</label>
+          <textarea id="remarks-3" placeholder="Enter observations..."></textarea>
+        </div>
+        <div class="photo-section">
+          <div class="photo-section-header">
+            <span class="photo-section-title">Photos & Comments:</span>
+            <button type="button" class="btn-add-photo" onclick="addPhoto(3)">+ Add Photo</button>
+          </div>
+          <div id="photos-3"></div>
+        </div>
+      </div>
+      
+      <!-- Item 4: Drain Sump / Water ponding -->
+      <div class="inspection-item" data-item="4">
+        <div class="item-header">
+          <div class="item-title">4. Drain Sump / Water Ponding</div>
+          <div class="status-buttons">
+            <button type="button" class="status-btn pass" data-status="Pass">Pass</button>
+            <button type="button" class="status-btn fail" data-status="Fail">Fail</button>
+            <button type="button" class="status-btn na" data-status="N/A">N/A</button>
+          </div>
+        </div>
+        <div class="task-description">Check roof area for water ponds. Check drain sump.</div>
+        <div class="field-group">
+          <label>Remarks:</label>
+          <textarea id="remarks-4" placeholder="Enter observations..."></textarea>
+        </div>
+        <div class="photo-section">
+          <div class="photo-section-header">
+            <span class="photo-section-title">Photos & Comments:</span>
+            <button type="button" class="btn-add-photo" onclick="addPhoto(4)">+ Add Photo</button>
+          </div>
+          <div id="photos-4"></div>
+        </div>
+      </div>
+      
+      <!-- Item 5: Roof General Housekeeping -->
+      <div class="inspection-item" data-item="5">
+        <div class="item-header">
+          <div class="item-title">5. Roof General Housekeeping</div>
+          <div class="status-buttons">
+            <button type="button" class="status-btn pass" data-status="Pass">Pass</button>
+            <button type="button" class="status-btn fail" data-status="Fail">Fail</button>
+            <button type="button" class="status-btn na" data-status="N/A">N/A</button>
+          </div>
+        </div>
+        <div class="task-description">Check general housekeeping of CCS area.</div>
+        <div class="field-group">
+          <label>Remarks:</label>
+          <textarea id="remarks-5" placeholder="Enter observations..."></textarea>
+        </div>
+        <div class="photo-section">
+          <div class="photo-section-header">
+            <span class="photo-section-title">Photos & Comments:</span>
+            <button type="button" class="btn-add-photo" onclick="addPhoto(5)">+ Add Photo</button>
+          </div>
+          <div id="photos-5"></div>
+        </div>
+      </div>
+      
+      <!-- Item 6: Riser / Common Corridors -->
+      <div class="inspection-item" data-item="6">
+        <div class="item-header">
+          <div class="item-title">6. Riser / Common Corridors</div>
+          <div class="status-buttons">
+            <button type="button" class="status-btn pass" data-status="Pass">Pass</button>
+            <button type="button" class="status-btn fail" data-status="Fail">Fail</button>
+            <button type="button" class="status-btn na" data-status="N/A">N/A</button>
+          </div>
+        </div>
+        <div class="task-description">Check riser and common corridor ceilings for leakages, condensation and insulation damages.</div>
+        <div class="field-group">
+          <label>Remarks:</label>
+          <textarea id="remarks-6" placeholder="Enter observations..."></textarea>
+        </div>
+        <div class="photo-section">
+          <div class="photo-section-header">
+            <span class="photo-section-title">Photos & Comments:</span>
+            <button type="button" class="btn-add-photo" onclick="addPhoto(6)">+ Add Photo</button>
+          </div>
+          <div id="photos-6"></div>
+        </div>
+      </div>
+      
+      <!-- Item 7: Ground Level Network Piping -->
+      <div class="inspection-item" data-item="7">
+        <div class="item-header">
+          <div class="item-title">7. Ground Level Network Piping</div>
+          <div class="status-buttons">
+            <button type="button" class="status-btn pass" data-status="Pass">Pass</button>
+            <button type="button" class="status-btn fail" data-status="Fail">Fail</button>
+            <button type="button" class="status-btn na" data-status="N/A">N/A</button>
+          </div>
+        </div>
+        <div class="task-description">Check network pipes for leakages, condensation and insulation damages.</div>
+        <div class="field-group">
+          <label>Remarks:</label>
+          <textarea id="remarks-7" placeholder="Enter observations..."></textarea>
+        </div>
+        <div class="photo-section">
+          <div class="photo-section-header">
+            <span class="photo-section-title">Photos & Comments:</span>
+            <button type="button" class="btn-add-photo" onclick="addPhoto(7)">+ Add Photo</button>
+          </div>
+          <div id="photos-7"></div>
+        </div>
+      </div>
+      
+    </div>
+    
+    <div class="additional-remarks">
+      <label for="additional-remarks">Additional Remarks (If any):</label>
+      <textarea id="additional-remarks" placeholder="Enter any additional observations or notes..."></textarea>
+    </div>
+    
+    <div class="signature-section">
+      <div class="signature-grid">
+        <div class="signature-field">
+          <label>Reported by: *</label>
+          <input type="text" id="reported-by" placeholder="Full Name" required>
+        </div>
+        <div class="signature-field">
+          <label>Digital Signature: *</label>
+          <div class="signature-canvas-wrapper">
+            <canvas id="signature-canvas" class="signature-canvas"></canvas>
+          </div>
+          <div class="signature-actions">
+            <button type="button" class="btn-clear-signature" onclick="clearSignature()">️ Clear Signature</button>
+          </div>
+          <div id="signature-confirmation" class="signature-confirmation">
+            ✅ Signature captured successfully
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="action-buttons">
+      <button type="button" id="submit-btn" class="btn btn-submit" onclick="submitForm()">📤 Submit via Email</button>
+      <button type="button" id="download-pdf-btn" class="btn btn-download-pdf" onclick="downloadPDF()">📄 Download PDF</button>
+      <button type="button" class="btn btn-print" onclick="window.print()">️ Print to PDF</button>
+    </div>
+    
+    <div id="status"></div>
+  </div>
+  
+  <script>
+    // Initialize datetime
+    document.getElementById('datetime').value = new Date().toISOString().slice(0, 16);
+    
+    // Status button handlers
+    document.querySelectorAll('.status-buttons').forEach(buttonGroup => {
+      const buttons = buttonGroup.querySelectorAll('.status-btn');
+      buttons.forEach(btn => {
+        btn.addEventListener('click', function() {
+          buttons.forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+        });
+      });
+    });
+    
+    // Photo counters per item
+    const photoCounters = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0};
+    
+    // Add photo entry function
+    function addPhoto(itemNum) {
+      photoCounters[itemNum]++;
+      const container = document.getElementById(`photos-${itemNum}`);
+      const photoNum = photoCounters[itemNum];
+      
+      const photoEntry = document.createElement('div');
+      photoEntry.className = 'photo-entry';
+      photoEntry.dataset.photoId = `${itemNum}-${photoNum}`;
+      photoEntry.innerHTML = `
+        <button type="button" class="btn-remove-photo" onclick="this.parentElement.remove()">×</button>
+        <div class="photo-upload-wrapper">
+          <label class="photo-upload-label">
+            <input type="file" class="photo-upload-input" accept="image/*" data-item="${itemNum}" data-photo="${photoNum}" onchange="handlePhotoUpload(this)">
+            <div class="upload-icon">📷</div>
+            <div class="upload-text">Click to upload photo</div>
+          </label>
+        </div>
+        <div class="photo-preview">
+          <img src="" alt="Photo preview">
+          <div class="photo-info"></div>
+        </div>
+        <div class="photo-comment">
+          <label>Photo Comment:</label>
+          <textarea class="photo-comment-input" placeholder="Describe this photo..." rows="2"></textarea>
+        </div>
+      `;
+      
+      container.appendChild(photoEntry);
+    }
+    
+    // Handle photo upload with compression
+    async function handlePhotoUpload(input) {
+      const file = input.files[0];
+      if (!file) return;
+      
+      const photoEntry = input.closest('.photo-entry');
+      const preview = photoEntry.querySelector('.photo-preview');
+      const previewImg = preview.querySelector('img');
+      const photoInfo = preview.querySelector('.photo-info');
+      
+      photoInfo.className = 'photo-info compressing';
+      photoInfo.textContent = '🔄 Compressing...';
+      preview.style.display = 'block';
+      
+      try {
+        if (file.type.startsWith('image/')) {
+          const compressed = await imageCompression(file, {
+            maxSizeMB: 1,
+            maxWidthOrHeight: 1200,
+            useWebWorker: true,
+            initialQuality: 0.85
+          });
+          
+          const reader = new FileReader();
+          reader.onload = (ev) => {
+            previewImg.src = ev.target.result;
+            photoInfo.className = 'photo-info';
+            photoInfo.textContent = `✅ ${compressed.name} (${(compressed.size/1024).toFixed(1)} KB)`;
+            photoEntry._compressedFile = compressed;
+          };
+          reader.readAsDataURL(compressed);
+        }
+      } catch (err) {
+        console.warn('Compression failed, using original:', err);
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          previewImg.src = ev.target.result;
+          photoInfo.className = 'photo-info';
+          photoInfo.textContent = `️ ${file.name} (${(file.size/1024).toFixed(1)} KB)`;
+        };
+        reader.readAsDataURL(file);
+        photoEntry._compressedFile = file;
+      }
+    }
+    
+    // Signature Pad Initialization
+    const signatureCanvas = document.getElementById('signature-canvas');
+    let signaturePad;
+    
+    function initSignaturePad() {
+      if (typeof SignaturePad !== 'undefined') {
+        signaturePad = new SignaturePad(signatureCanvas, {
+          minWidth: 0.5,
+          maxWidth: 2.5,
+          penColor: '#000000',
+          backgroundColor: 'rgba(255, 255, 255, 0)'
+        });
+        
+        // Resize canvas properly
+        resizeCanvas();
+        
+        // Handle signature events
+        signaturePad.onEnd = function() {
+          if (!signaturePad.isEmpty()) {
+            document.getElementById('signature-confirmation').classList.add('visible');
+          }
+        };
+      } else {
+        console.error('SignaturePad library failed to load');
+        document.getElementById('signature-canvas').parentElement.innerHTML = '<p style="color: red;">Signature pad failed to load. Please refresh.</p>';
+      }
+    }
+    
+    function resizeCanvas() {
+      const ratio = Math.max(window.devicePixelRatio || 1, 1);
+      signatureCanvas.width = signatureCanvas.offsetWidth * ratio;
+      signatureCanvas.height = signatureCanvas.offsetHeight * ratio;
+      signatureCanvas.getContext('2d').scale(ratio, ratio);
+      signatureCanvas.getContext('2d').lineCap = 'round';
+      signatureCanvas.getContext('2d').lineJoin = 'round';
+    }
+    
+    function clearSignature() {
+      if (signaturePad) {
+        signaturePad.clear();
+        document.getElementById('signature-confirmation').classList.remove('visible');
+      }
+    }
+    
+    window.addEventListener('load', function() {
+      // Small delay to ensure canvas is rendered
+      setTimeout(initSignaturePad, 100);
+    });
+    
+    window.addEventListener('resize', function() {
+      if (signaturePad) {
+        const data = signaturePad.toData();
+        resizeCanvas();
+        signaturePad.fromData(data);
+      }
+    });
+    
+    // Form submission
+    async function submitForm() {
+      const statusDiv = document.getElementById('status');
+      const submitBtn = document.getElementById('submit-btn');
+      
+      // Validation
+      const requiredFields = ['district', 'block', 'datetime', 'inspector-email', 'reported-by'];
+      let isValid = true;
+      
+      requiredFields.forEach(fieldId => {
+        const field = document.getElementById(fieldId);
+        if (!field.value.trim()) {
+          field.style.borderColor = 'var(--danger)';
+          isValid = false;
+        } else {
+          field.style.borderColor = '#ced4da';
+        }
+      });
+      
+      if (!signaturePad || signaturePad.isEmpty()) {
+        isValid = false;
+        document.querySelector('.signature-canvas-wrapper').style.borderColor = 'var(--danger)';
+      } else {
+        document.querySelector('.signature-canvas-wrapper').style.borderColor = '#ced4da';
+      }
+      
+      if (!isValid) {
+        showStatus(' Please fill in all required fields marked with * and provide a signature', 'error');
+        return;
+      }
+      
+      showStatus('📤 Preparing and sending inspection report...', 'loading');
+      submitBtn.disabled = true;
+      
+      try {
+        const formData = new FormData();
+        
+        // Add header info
+        formData.append('_subject', `CCS Inspection - Block ${document.getElementById('block').value} - ${document.getElementById('datetime').value}`);
+        formData.append('_replyto', document.getElementById('inspector-email').value);
+        formData.append('district', document.getElementById('district').value);
+        formData.append('cluster', document.getElementById('cluster').value || 'N/A');
+        formData.append('block', document.getElementById('block').value);
+        formData.append('ccs', document.getElementById('ccs').value || 'N/A');
+        formData.append('datetime', document.getElementById('datetime').value);
+        formData.append('inspector_email', document.getElementById('inspector-email').value);
+        formData.append('reported_by', document.getElementById('reported-by').value);
+        formData.append('additional_remarks', document.getElementById('additional-remarks').value || 'None');
+        
+        // Add signature
+        if (signaturePad && !signaturePad.isEmpty()) {
+          const signatureBlob = await new Promise(resolve => {
+            signatureCanvas.toBlob(resolve, 'image/png');
+          });
+          formData.append('signature', signatureBlob, 'signature.png');
+        }
+        
+        // Add inspection items
+        document.querySelectorAll('.inspection-item').forEach(item => {
+          const itemNum = item.dataset.item;
+          const statusBtn = item.querySelector('.status-btn.active');
+          const remarks = document.getElementById(`remarks-${itemNum}`).value;
+          
+          formData.append(`item_${itemNum}_status`, statusBtn ? statusBtn.dataset.status : 'Not Assessed');
+          formData.append(`item_${itemNum}_remarks`, remarks || 'No remarks');
+          
+          // Add photos for this item
+          const photoEntries = item.querySelectorAll('.photo-entry');
+          photoEntries.forEach((entry, index) => {
+            const file = entry._compressedFile;
+            const comment = entry.querySelector('.photo-comment-input').value;
+            
+            if (file) {
+              formData.append(`item_${itemNum}_photo_${index + 1}`, file);
+              formData.append(`item_${itemNum}_photo_${index + 1}_comment`, comment || 'No comment');
+            }
+          });
+        });
+        
+        const response = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
+          method: 'POST',
+          body: formData,
+          headers: { 'Accept': 'application/json' }
+        });
+        
+        if (response.ok) {
+          showStatus('✅ Inspection report submitted successfully! A copy has been sent to your email.', 'success');
+          setTimeout(() => {
+            if (confirm('Submit another inspection?')) {
+              location.reload();
+            }
+          }, 3000);
+        } else {
+          throw new Error('Submission failed');
+        }
+      } catch (err) {
+        console.error('Submission error:', err);
+        showStatus('❌ Failed to submit. Please check your connection and try again.', 'error');
+        submitBtn.disabled = false;
+      }
+    }
+    
+    // Download PDF
+    async function downloadPDF() {
+      const btn = document.getElementById('download-pdf-btn');
+      const statusDiv = document.getElementById('status');
+      
+      // Hide action buttons temporarily
+      const actionButtons = document.querySelector('.action-buttons');
+      const photoUploadLabels = document.querySelectorAll('.photo-upload-label');
+      const addPhotoBtns = document.querySelectorAll('.btn-add-photo');
+      const removePhotoBtns = document.querySelectorAll('.btn-remove-photo');
+      const signatureActions = document.querySelector('.signature-actions');
+      
+      actionButtons.style.display = 'none';
+      photoUploadLabels.forEach(el => el.style.display = 'none');
+      addPhotoBtns.forEach(el => el.style.display = 'none');
+      removePhotoBtns.forEach(el => el.style.display = 'none');
+      if (signatureActions) signatureActions.style.display = 'none';
+      
+      // Show signature confirmation if exists
+      if (signaturePad && !signaturePad.isEmpty()) {
+        document.getElementById('signature-confirmation').classList.add('visible');
+      }
+      
+      // Wait for repaint
+      await new Promise(resolve => setTimeout(resolve, 200));
+      
+      showStatus('📄 Generating PDF...', 'loading');
+      btn.disabled = true;
+      
+      try {
+        const element = document.querySelector('.form-container');
+        const opt = {
+          margin: 0.5,
+          filename: `CCS_Inspection_${document.getElementById('block').value}_${new Date().toISOString().slice(0,10)}.pdf`,
+          image: { type: 'jpeg', quality: 0.95 },
+          html2canvas: { 
+            scale: 1.5, 
+            useCORS: true, 
+            logging: false,
+            allowTaint: false
+          },
+          jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+        };
+        
+        await html2pdf().set(opt).from(element).save();
+        showStatus('✅ PDF downloaded successfully!', 'success');
+      } catch (err) {
+        console.error('PDF generation failed:', err);
+        showStatus('❌ PDF generation failed. Try Print to PDF instead.', 'error');
+      } finally {
+        // Restore UI
+        actionButtons.style.display = 'flex';
+        photoUploadLabels.forEach(el => el.style.display = 'block');
+        addPhotoBtns.forEach(el => el.style.display = 'block');
+        removePhotoBtns.forEach(el => el.style.display = 'block');
+        if (signatureActions) signatureActions.style.display = 'flex';
+        btn.disabled = false;
+        
+        setTimeout(() => {
+          statusDiv.style.display = 'none';
+        }, 5000);
+      }
+    }
+    
+    function showStatus(message, type) {
+      const statusDiv = document.getElementById('status');
+      statusDiv.textContent = message;
+      statusDiv.className = type;
+      statusDiv.style.display = 'block';
+      
+      if (type !== 'loading') {
+        setTimeout(() => {
+          statusDiv.style.display = 'none';
+        }, 8000);
+      }
+    }
+  </script>
+</body>
+</html>
