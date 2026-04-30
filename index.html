@@ -503,8 +503,11 @@
         <input type="text" id="block" placeholder="e.g., 111A">
       </div>
       <div class="info-field">
-        <label>CCS</label>
-        <input type="text" id="ccs" placeholder="CCS Number">
+        <label>Chiller Block</label>
+        <div class="status-buttons" id="chiller-block-selection">
+          <button type="button" class="status-btn pass" data-value="Yes" onclick="selectChillerBlock(this)">Yes</button>
+          <button type="button" class="status-btn fail" data-value="No" onclick="selectChillerBlock(this)">No</button>
+        </div>
       </div>
       <div class="info-field">
         <label>Date / Time</label>
@@ -725,8 +728,15 @@
     // Initialize datetime
     document.getElementById('datetime').value = new Date().toISOString().slice(0, 16);
     
-    // Status button handlers
-    document.querySelectorAll('.status-buttons').forEach(buttonGroup => {
+    // Chiller Block Yes/No selector
+    function selectChillerBlock(btn) {
+      const container = document.getElementById('chiller-block-selection');
+      container.querySelectorAll('.status-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+    
+    // Status button handlers for inspection items
+    document.querySelectorAll('.inspection-item .status-buttons').forEach(buttonGroup => {
       const buttons = buttonGroup.querySelectorAll('.status-btn');
       buttons.forEach(btn => {
         btn.addEventListener('click', function() {
