@@ -477,7 +477,17 @@
       box-shadow: 0 6px 16px rgba(0,102,179,0.4);
     }
     
-    /* Print styles - always show English */
+    /* =========================================
+       LANGUAGE & PRINT RULES (CORE FIX)
+       ========================================= */
+    .tamil-text { display: none; }
+    .english-text { display: inline; }
+    
+    /* Screen: Toggle based on body class */
+    body.lang-tamil .tamil-text { display: inline; }
+    body.lang-tamil .english-text { display: none; }
+    
+    /* Print: ALWAYS force English, hide Tamil */
     @media print {
       body { background: white; }
       .form-container { box-shadow: none; padding: 1rem; }
@@ -485,6 +495,10 @@
       .photo-entry { break-inside: avoid; }
       .photo-upload-input { display: none !important; }
       .inspection-item { break-inside: avoid; }
+      
+      /* FORCE ENGLISH FOR PRINT */
+      .tamil-text { display: none !important; }
+      .english-text { display: inline !important; }
     }
     
     @media (max-width: 768px) {
@@ -496,13 +510,6 @@
       .signature-grid { grid-template-columns: 1fr; gap: 1rem; }
       .btn { width: 100%; min-width: auto; }
     }
-    
-    /* Language toggle helpers */
-    .tamil-text { display: none; }
-    .english-text { display: inline; }
-    
-    body.lang-tamil .tamil-text { display: inline; }
-    body.lang-tamil .english-text { display: none; }
   </style>
 </head>
 <body class="lang-english">
@@ -527,10 +534,10 @@
           <span class="english-text">District</span><span class="tamil-text">மாவட்டம்</span>
         </label>
         <select id="district">
-          <option value="" data-en="Select District" data-ta="மாவட்டத்தைத் தேர்ந்தெடுக்கவும்">Select District</option>
-          <option value="Plantation" data-en="Plantation" data-ta="தோட்டம்">Plantation</option>
-          <option value="Garden" data-en="Garden" data-ta="தோட்டம்">Garden</option>
-          <option value="Park" data-en="Park" data-ta="பூங்கா">Park</option>
+          <option value="">Select District</option>
+          <option value="Plantation">Plantation</option>
+          <option value="Garden">Garden</option>
+          <option value="Park">Park</option>
         </select>
       </div>
       <div class="info-field">
@@ -613,7 +620,10 @@
               <span class="english-text">Photos & Comments</span>
               <span class="tamil-text">புகைப்படங்கள் மற்றும் கருத்துகள்</span>
             </span>
-            <button type="button" class="btn-add-photo" onclick="addPhoto(1)" data-en="+ Add Photo" data-ta="+ புகைப்படம் சேர்க்க">+ Add Photo</button>
+            <button type="button" class="btn-add-photo" onclick="addPhoto(1)">
+              <span class="english-text">+ Add Photo</span>
+              <span class="tamil-text">+ புகைப்படம் சேர்க்க</span>
+            </button>
           </div>
           <div id="photos-1"></div>
         </div>
@@ -656,7 +666,10 @@
               <span class="english-text">Photos & Comments</span>
               <span class="tamil-text">புகைப்படங்கள் மற்றும் கருத்துகள்</span>
             </span>
-            <button type="button" class="btn-add-photo" onclick="addPhoto(2)" data-en="+ Add Photo" data-ta="+ புகைப்படம் சேர்க்க">+ Add Photo</button>
+            <button type="button" class="btn-add-photo" onclick="addPhoto(2)">
+              <span class="english-text">+ Add Photo</span>
+              <span class="tamil-text">+ புகைப்படம் சேர்க்க</span>
+            </button>
           </div>
           <div id="photos-2"></div>
         </div>
@@ -699,7 +712,10 @@
               <span class="english-text">Photos & Comments</span>
               <span class="tamil-text">புகைப்படங்கள் மற்றும் கருத்துகள்</span>
             </span>
-            <button type="button" class="btn-add-photo" onclick="addPhoto(3)" data-en="+ Add Photo" data-ta="+ புகைப்படம் சேர்க்க">+ Add Photo</button>
+            <button type="button" class="btn-add-photo" onclick="addPhoto(3)">
+              <span class="english-text">+ Add Photo</span>
+              <span class="tamil-text">+ புகைப்படம் சேர்க்க</span>
+            </button>
           </div>
           <div id="photos-3"></div>
         </div>
@@ -742,7 +758,10 @@
               <span class="english-text">Photos & Comments</span>
               <span class="tamil-text">புகைப்படங்கள் மற்றும் கருத்துகள்</span>
             </span>
-            <button type="button" class="btn-add-photo" onclick="addPhoto(4)" data-en="+ Add Photo" data-ta="+ புகைப்படம் சேர்க்க">+ Add Photo</button>
+            <button type="button" class="btn-add-photo" onclick="addPhoto(4)">
+              <span class="english-text">+ Add Photo</span>
+              <span class="tamil-text">+ புகைப்படம் சேர்க்க</span>
+            </button>
           </div>
           <div id="photos-4"></div>
         </div>
@@ -785,7 +804,10 @@
               <span class="english-text">Photos & Comments</span>
               <span class="tamil-text">புகைப்படங்கள் மற்றும் கருத்துகள்</span>
             </span>
-            <button type="button" class="btn-add-photo" onclick="addPhoto(5)" data-en="+ Add Photo" data-ta="+ புகைப்படம் சேர்க்க">+ Add Photo</button>
+            <button type="button" class="btn-add-photo" onclick="addPhoto(5)">
+              <span class="english-text">+ Add Photo</span>
+              <span class="tamil-text">+ புகைப்படம் சேர்க்க</span>
+            </button>
           </div>
           <div id="photos-5"></div>
         </div>
@@ -828,7 +850,10 @@
               <span class="english-text">Photos & Comments</span>
               <span class="tamil-text">புகைப்படங்கள் மற்றும் கருத்துகள்</span>
             </span>
-            <button type="button" class="btn-add-photo" onclick="addPhoto(6)" data-en="+ Add Photo" data-ta="+ புகைப்படம் சேர்க்க">+ Add Photo</button>
+            <button type="button" class="btn-add-photo" onclick="addPhoto(6)">
+              <span class="english-text">+ Add Photo</span>
+              <span class="tamil-text">+ புகைப்படம் சேர்க்க</span>
+            </button>
           </div>
           <div id="photos-6"></div>
         </div>
@@ -871,7 +896,10 @@
               <span class="english-text">Photos & Comments</span>
               <span class="tamil-text">புகைப்படங்கள் மற்றும் கருத்துகள்</span>
             </span>
-            <button type="button" class="btn-add-photo" onclick="addPhoto(7)" data-en="+ Add Photo" data-ta="+ புகைப்படம் சேர்க்க">+ Add Photo</button>
+            <button type="button" class="btn-add-photo" onclick="addPhoto(7)">
+              <span class="english-text">+ Add Photo</span>
+              <span class="tamil-text">+ புகைப்படம் சேர்க்க</span>
+            </button>
           </div>
           <div id="photos-7"></div>
         </div>
@@ -903,7 +931,10 @@
             <canvas id="signature-canvas" class="signature-canvas"></canvas>
           </div>
           <div class="signature-actions">
-            <button type="button" class="btn-clear-signature" onclick="clearSignature()" data-en="🗑️ Clear Signature" data-ta="🗑️ கையொப்பத்தை அழிக்க">🗑️ Clear Signature</button>
+            <button type="button" class="btn-clear-signature" onclick="clearSignature()">
+              <span class="english-text">🗑️ Clear Signature</span>
+              <span class="tamil-text">🗑️ கையொப்பத்தை அழிக்க</span>
+            </button>
           </div>
           <div id="signature-confirmation" class="signature-confirmation">
             <span class="english-text">✅ Signature captured successfully</span>
@@ -914,84 +945,71 @@
     </div>
     
     <div class="action-buttons">
-      <button type="button" class="btn btn-print" onclick="window.print()" data-en="🖨️ Print to PDF" data-ta="🖨️ PDF ஆக அச்சிட">🖨️ Print to PDF</button>
+      <button type="button" class="btn btn-print" onclick="window.print()">
+        <span class="english-text">🖨️ Print to PDF</span>
+        <span class="tamil-text">🖨️ PDF ஆக அச்சிட</span>
+      </button>
     </div>
     
     <div id="status"></div>
   </div>
   
   <script>
-    // Language toggle
+    // Language toggle - ONLY changes body class. CSS handles the rest.
     function setLanguage(lang) {
       document.body.className = `lang-${lang}`;
       document.getElementById('btn-english').classList.toggle('active', lang === 'english');
       document.getElementById('btn-tamil').classList.toggle('active', lang === 'tamil');
-      
-      // Update all elements with data-en and data-ta attributes
-      document.querySelectorAll('[data-en][data-ta]').forEach(el => {
-        el.textContent = lang === 'tamil' ? el.getAttribute('data-ta') : el.getAttribute('data-en');
-      });
-      
-      // Update select options
-      document.querySelectorAll('select option[data-en][data-ta]').forEach(option => {
-        option.textContent = lang === 'tamil' ? option.getAttribute('data-ta') : option.getAttribute('data-en');
-      });
     }
     
     // Initialize datetime
     document.getElementById('datetime').value = new Date().toISOString().slice(0, 16);
     
-    // Chiller Block checkbox handler - ensure only one is selected
+    // Chiller Block checkbox handler
     document.querySelectorAll('#chiller-block-selection input[type="checkbox"]').forEach(checkbox => {
       checkbox.addEventListener('change', function() {
         if (this.checked) {
-          const groupName = this.name;
-          document.querySelectorAll(`#chiller-block-selection input[type="checkbox"][name="${groupName}"]`).forEach(cb => {
+          document.querySelectorAll(`#chiller-block-selection input[type="checkbox"][name="${this.name}"]`).forEach(cb => {
             if (cb !== this) cb.checked = false;
           });
         }
       });
     });
     
-    // Inspection item checkbox handlers - ensure only one status per item
+    // Inspection item checkbox handlers
     document.querySelectorAll('.inspection-item').forEach(item => {
       const checkboxes = item.querySelectorAll('.checkbox-group input[type="checkbox"]');
       checkboxes.forEach(checkbox => {
         checkbox.addEventListener('change', function() {
           if (this.checked) {
-            checkboxes.forEach(cb => {
-              if (cb !== this) cb.checked = false;
-            });
+            checkboxes.forEach(cb => { if (cb !== this) cb.checked = false; });
           }
         });
       });
     });
     
-    // Photo counters per item
+    // Photo counters
     const photoCounters = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0};
     
-    // Add photo entry function
+    // Add photo entry
     function addPhoto(itemNum) {
       photoCounters[itemNum]++;
       const container = document.getElementById(`photos-${itemNum}`);
       const photoNum = photoCounters[itemNum];
-      const currentLang = document.body.classList.contains('lang-tamil') ? 'tamil' : 'english';
+      const isTamil = document.body.classList.contains('lang-tamil');
       
       const photoEntry = document.createElement('div');
       photoEntry.className = 'photo-entry';
-      photoEntry.dataset.photoId = `${itemNum}-${photoNum}`;
-      
-      const uploadText = currentLang === 'tamil' ? 'புகைப்படம் பதிவேற்ற கிளிக் செய்யவும்' : 'Click to upload photo';
-      const photoCommentLabel = currentLang === 'tamil' ? 'புகைப்பட கருத்து' : 'Photo Comment';
-      const photoCommentPlaceholder = currentLang === 'tamil' ? 'இந்த புகைப்படத்தை விவரிக்கவும்...' : 'Describe this photo...';
-      
       photoEntry.innerHTML = `
         <button type="button" class="btn-remove-photo" onclick="this.parentElement.remove()">×</button>
         <div class="photo-upload-wrapper">
           <label class="photo-upload-label">
-            <input type="file" class="photo-upload-input" accept="image/*" data-item="${itemNum}" data-photo="${photoNum}" onchange="handlePhotoUpload(this)">
+            <input type="file" class="photo-upload-input" accept="image/*" onchange="handlePhotoUpload(this)">
             <div class="upload-icon">📷</div>
-            <div class="upload-text">${uploadText}</div>
+            <div class="upload-text">
+              <span class="english-text">Click to upload photo</span>
+              <span class="tamil-text">புகைப்படம் பதிவேற்ற கிளிக் செய்யவும்</span>
+            </div>
           </label>
         </div>
         <div class="photo-preview">
@@ -999,15 +1017,17 @@
           <div class="photo-info"></div>
         </div>
         <div class="photo-comment">
-          <label>${photoCommentLabel}:</label>
-          <textarea class="photo-comment-input" placeholder="${photoCommentPlaceholder}" rows="2"></textarea>
+          <label>
+            <span class="english-text">Photo Comment</span><span class="tamil-text">புகைப்பட கருத்து</span>:
+          </label>
+          <textarea class="photo-comment-input" placeholder="Describe this photo..." rows="2"></textarea>
         </div>
       `;
       
       container.appendChild(photoEntry);
     }
     
-    // Handle photo upload with compression
+    // Handle photo upload
     async function handlePhotoUpload(input) {
       const file = input.files[0];
       if (!file) return;
@@ -1016,12 +1036,10 @@
       const preview = photoEntry.querySelector('.photo-preview');
       const previewImg = preview.querySelector('img');
       const photoInfo = preview.querySelector('.photo-info');
-      const currentLang = document.body.classList.contains('lang-tamil') ? 'tamil' : 'english';
-      
-      const compressingText = currentLang === 'tamil' ? '🔄 சுருக்கப்படுகிறது...' : '🔄 Compressing...';
+      const isTamil = document.body.classList.contains('lang-tamil');
       
       photoInfo.className = 'photo-info compressing';
-      photoInfo.textContent = compressingText;
+      photoInfo.innerHTML = `<span class="english-text">🔄 Compressing...</span><span class="tamil-text">🔄 சுருக்கப்படுகிறது...</span>`;
       preview.style.display = 'block';
       
       try {
@@ -1055,7 +1073,7 @@
       }
     }
     
-    // Signature Pad Initialization
+    // Signature Pad
     const signatureCanvas = document.getElementById('signature-canvas');
     let signaturePad;
     
@@ -1094,11 +1112,8 @@
       }
     }
     
-    window.addEventListener('load', function() {
-      setTimeout(initSignaturePad, 100);
-    });
-    
-    window.addEventListener('resize', function() {
+    window.addEventListener('load', () => setTimeout(initSignaturePad, 100));
+    window.addEventListener('resize', () => {
       if (signaturePad) {
         const data = signaturePad.toData();
         resizeCanvas();
