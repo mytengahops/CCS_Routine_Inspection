@@ -45,11 +45,10 @@
     
     .form-title {
       color: var(--sp-blue);
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       font-weight: 700;
       margin: 0;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      line-height: 1.4;
     }
     
     .info-grid {
@@ -113,38 +112,36 @@
     .item-title {
       font-weight: 700;
       color: var(--sp-blue);
-      font-size: 1.05rem;
+      font-size: 1rem;
     }
     
-    .status-buttons { display: flex; gap: 0.5rem; }
+    /* Checkbox Groups */
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
     
-    .status-btn {
-      padding: 0.4rem 1rem;
-      border: 2px solid #dee2e6;
-      border-radius: 20px;
-      background: white;
-      cursor: pointer;
-      font-weight: 600;
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
       font-size: 0.85rem;
-      transition: all 0.2s;
+      cursor: pointer;
+      user-select: none;
     }
     
-    .status-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    .checkbox-label input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--sp-blue);
+      cursor: pointer;
     }
-    
-    .status-btn.pass { background: #d4edda; border-color: var(--success); color: #155724; }
-    .status-btn.fail { background: #f8d7da; border-color: var(--danger); color: #721c24; }
-    .status-btn.na { background: #fff3cd; border-color: var(--warning); color: #856404; }
-    
-    .status-btn.active.pass { background: var(--success); color: white; }
-    .status-btn.active.fail { background: var(--danger); color: white; }
-    .status-btn.active.na { background: var(--warning); color: #333; }
     
     .task-description {
       color: var(--gray);
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       margin-bottom: 1rem;
       padding: 0.5rem;
       background: var(--light-gray);
@@ -187,6 +184,8 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 0.75rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
     }
     
     .photo-section-title {
@@ -446,24 +445,12 @@
       box-shadow: 0 6px 16px rgba(0,102,179,0.4);
     }
     
-    #status {
-      display: none;
-      margin-top: 1rem;
-      padding: 1rem;
-      border-radius: 6px;
-      font-weight: 600;
-      text-align: center;
-    }
-    
-    #status.success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-    #status.error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
-    
     @media (max-width: 768px) {
       .form-container { padding: 1rem; }
-      .form-title { font-size: 1.2rem; }
+      .form-title { font-size: 1.1rem; }
       .info-grid { grid-template-columns: 1fr; }
       .item-header { grid-template-columns: 1fr; }
-      .status-buttons { justify-content: flex-start; }
+      .checkbox-group { flex-direction: column; align-items: flex-start; gap: 0.3rem; }
       .signature-grid { grid-template-columns: 1fr; gap: 1rem; }
       .btn { width: 100%; min-width: auto; }
     }
@@ -481,41 +468,45 @@
 <body>
   <div class="form-container">
     <div class="header">
-      <h1 class="form-title">CCS Routine Inspection General Checklist</h1>
+      <h1 class="form-title">CCS Routine Inspection General Checklist<br><span style="font-size: 0.9rem; font-weight: normal; color: var(--gray);">(சி.சி.எஸ் வழக்கமான ஆய்வு பொது சோதனை பட்டியல்)</span></h1>
     </div>
     
     <div class="info-grid">
       <div class="info-field">
-        <label>District</label>
+        <label>District (மாவட்டம்)</label>
         <select id="district">
-          <option value="">Select District</option>
-          <option value="Plantation">Plantation</option>
-          <option value="Garden">Garden</option>
-          <option value="Park">Park</option>
+          <option value="">Select District (மாவட்டத்தைத் தேர்ந்தெடுக்கவும்)</option>
+          <option value="Plantation">Plantation (தோட்டம்)</option>
+          <option value="Garden">Garden (தோட்டம்)</option>
+          <option value="Park">Park (பூங்கா)</option>
         </select>
       </div>
       <div class="info-field">
-        <label>Cluster</label>
+        <label>Cluster (குழு)</label>
         <input type="text" id="cluster" placeholder="e.g., 4A">
       </div>
       <div class="info-field">
-        <label>Block</label>
+        <label>Block (தொகுதி)</label>
         <input type="text" id="block" placeholder="e.g., 111A">
       </div>
       <div class="info-field">
-        <label>Chiller Block</label>
-        <div class="status-buttons" id="chiller-block-selection">
-          <button type="button" class="status-btn pass" data-value="Yes" onclick="selectChillerBlock(this)">Yes</button>
-          <button type="button" class="status-btn fail" data-value="No" onclick="selectChillerBlock(this)">No</button>
+        <label>Chiller Block (சில்லர் தொகுதி)</label>
+        <div class="checkbox-group" id="chiller-block-selection">
+          <label class="checkbox-label">
+            <input type="checkbox" name="chiller-yes" value="Yes"> Yes (ஆம்)
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" name="chiller-no" value="No"> No (இல்லை)
+          </label>
         </div>
       </div>
       <div class="info-field">
-        <label>Date / Time</label>
+        <label>Date / Time (தேதி / நேரம்)</label>
         <input type="datetime-local" id="datetime">
       </div>
       <div class="info-field">
-        <label>Contractor Company</label>
-        <input type="text" id="contractor-company" placeholder="Enter contractor company name">
+        <label>Contractor Company (ஒப்பந்ததாரர் நிறுவனம்)</label>
+        <input type="text" id="contractor-company" placeholder="Enter contractor company name (ஒப்பந்ததாரர் நிறுவனப் பெயரை உள்ளிடவும்)">
       </div>
     </div>
     
@@ -524,22 +515,28 @@
       <!-- Item 1: Security -->
       <div class="inspection-item" data-item="1">
         <div class="item-header">
-          <div class="item-title">1. Security</div>
-          <div class="status-buttons">
-            <button type="button" class="status-btn pass" data-status="Pass">Pass</button>
-            <button type="button" class="status-btn fail" data-status="Fail">Fail</button>
-            <button type="button" class="status-btn na" data-status="N/A">N/A</button>
+          <div class="item-title">1. Security (பாதுகாப்பு)</div>
+          <div class="checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" name="item-1-pass" value="Pass"> Pass (தேர்ச்சி)
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="item-1-fail" value="Fail"> Fail (தோல்வி)
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="item-1-na" value="N/A"> N/A (பொருந்தாது)
+            </label>
           </div>
         </div>
-        <div class="task-description">Check roof access doors.</div>
+        <div class="task-description">Check roof access doors. (கூரை அணுகல் கதவுகளைச் சோதிக்கவும்.)</div>
         <div class="field-group">
-          <label>Remarks:</label>
-          <textarea id="remarks-1" placeholder="Enter observations..."></textarea>
+          <label>Remarks (கருத்துகள்):</label>
+          <textarea id="remarks-1" placeholder="Enter observations... (கவனிப்புகளை உள்ளிடவும்...)"></textarea>
         </div>
         <div class="photo-section">
           <div class="photo-section-header">
-            <span class="photo-section-title">Photos & Comments:</span>
-            <button type="button" class="btn-add-photo" onclick="addPhoto(1)">+ Add Photo</button>
+            <span class="photo-section-title">Photos & Comments (புகைப்படங்கள் மற்றும் கருத்துகள்):</span>
+            <button type="button" class="btn-add-photo" onclick="addPhoto(1)">+ Add Photo (புகைப்படம் சேர்க்க)</button>
           </div>
           <div id="photos-1"></div>
         </div>
@@ -548,22 +545,28 @@
       <!-- Item 2: Roof Lighting -->
       <div class="inspection-item" data-item="2">
         <div class="item-header">
-          <div class="item-title">2. Roof Lighting</div>
-          <div class="status-buttons">
-            <button type="button" class="status-btn pass" data-status="Pass">Pass</button>
-            <button type="button" class="status-btn fail" data-status="Fail">Fail</button>
-            <button type="button" class="status-btn na" data-status="N/A">N/A</button>
+          <div class="item-title">2. Roof Lighting (கூரை விளக்கு)</div>
+          <div class="checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" name="item-2-pass" value="Pass"> Pass (தேர்ச்சி)
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="item-2-fail" value="Fail"> Fail (தோல்வி)
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="item-2-na" value="N/A"> N/A (பொருந்தாது)
+            </label>
           </div>
         </div>
-        <div class="task-description">Check roof area lighting.</div>
+        <div class="task-description">Check roof area lighting. (கூரை பகுதி விளக்கைச் சோதிக்கவும்.)</div>
         <div class="field-group">
-          <label>Remarks:</label>
-          <textarea id="remarks-2" placeholder="Enter observations..."></textarea>
+          <label>Remarks (கருத்துகள்):</label>
+          <textarea id="remarks-2" placeholder="Enter observations... (கவனிப்புகளை உள்ளிடவும்...)"></textarea>
         </div>
         <div class="photo-section">
           <div class="photo-section-header">
-            <span class="photo-section-title">Photos & Comments:</span>
-            <button type="button" class="btn-add-photo" onclick="addPhoto(2)">+ Add Photo</button>
+            <span class="photo-section-title">Photos & Comments (புகைப்படங்கள் மற்றும் கருத்துகள்):</span>
+            <button type="button" class="btn-add-photo" onclick="addPhoto(2)">+ Add Photo (புகைப்படம் சேர்க்க)</button>
           </div>
           <div id="photos-2"></div>
         </div>
@@ -572,22 +575,28 @@
       <!-- Item 3: Work Access -->
       <div class="inspection-item" data-item="3">
         <div class="item-header">
-          <div class="item-title">3. Work Access</div>
-          <div class="status-buttons">
-            <button type="button" class="status-btn pass" data-status="Pass">Pass</button>
-            <button type="button" class="status-btn fail" data-status="Fail">Fail</button>
-            <button type="button" class="status-btn na" data-status="N/A">N/A</button>
+          <div class="item-title">3. Work Access (வேலை அணுகல்)</div>
+          <div class="checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" name="item-3-pass" value="Pass"> Pass (தேர்ச்சி)
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="item-3-fail" value="Fail"> Fail (தோல்வி)
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="item-3-na" value="N/A"> N/A (பொருந்தாது)
+            </label>
           </div>
         </div>
-        <div class="task-description">Check roof work access platforms and railings.</div>
+        <div class="task-description">Check roof work access platforms and railings. (கூரை வேலை அணுகல் தளங்கள் மற்றும் ரெயிலிங்குகளைச் சோதிக்கவும்.)</div>
         <div class="field-group">
-          <label>Remarks:</label>
-          <textarea id="remarks-3" placeholder="Enter observations..."></textarea>
+          <label>Remarks (கருத்துகள்):</label>
+          <textarea id="remarks-3" placeholder="Enter observations... (கவனிப்புகளை உள்ளிடவும்...)"></textarea>
         </div>
         <div class="photo-section">
           <div class="photo-section-header">
-            <span class="photo-section-title">Photos & Comments:</span>
-            <button type="button" class="btn-add-photo" onclick="addPhoto(3)">+ Add Photo</button>
+            <span class="photo-section-title">Photos & Comments (புகைப்படங்கள் மற்றும் கருத்துகள்):</span>
+            <button type="button" class="btn-add-photo" onclick="addPhoto(3)">+ Add Photo (புகைப்படம் சேர்க்க)</button>
           </div>
           <div id="photos-3"></div>
         </div>
@@ -596,22 +605,28 @@
       <!-- Item 4: Drain Sump / Water ponding -->
       <div class="inspection-item" data-item="4">
         <div class="item-header">
-          <div class="item-title">4. Drain Sump / Water Ponding</div>
-          <div class="status-buttons">
-            <button type="button" class="status-btn pass" data-status="Pass">Pass</button>
-            <button type="button" class="status-btn fail" data-status="Fail">Fail</button>
-            <button type="button" class="status-btn na" data-status="N/A">N/A</button>
+          <div class="item-title">4. Drain Sump / Water Ponding (வடிகால் குழி / நீர் தேக்கம்)</div>
+          <div class="checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" name="item-4-pass" value="Pass"> Pass (தேர்ச்சி)
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="item-4-fail" value="Fail"> Fail (தோல்வி)
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="item-4-na" value="N/A"> N/A (பொருந்தாது)
+            </label>
           </div>
         </div>
-        <div class="task-description">Check roof area for water ponds. Check drain sump.</div>
+        <div class="task-description">Check roof area for water ponds. Check drain sump. (கூரை பகுதியில் நீர் தேக்கங்களைச் சோதிக்கவும். வடிகால் குழியைச் சோதிக்கவும்.)</div>
         <div class="field-group">
-          <label>Remarks:</label>
-          <textarea id="remarks-4" placeholder="Enter observations..."></textarea>
+          <label>Remarks (கருத்துகள்):</label>
+          <textarea id="remarks-4" placeholder="Enter observations... (கவனிப்புகளை உள்ளிடவும்...)"></textarea>
         </div>
         <div class="photo-section">
           <div class="photo-section-header">
-            <span class="photo-section-title">Photos & Comments:</span>
-            <button type="button" class="btn-add-photo" onclick="addPhoto(4)">+ Add Photo</button>
+            <span class="photo-section-title">Photos & Comments (புகைப்படங்கள் மற்றும் கருத்துகள்):</span>
+            <button type="button" class="btn-add-photo" onclick="addPhoto(4)">+ Add Photo (புகைப்படம் சேர்க்க)</button>
           </div>
           <div id="photos-4"></div>
         </div>
@@ -620,22 +635,28 @@
       <!-- Item 5: Roof General Housekeeping -->
       <div class="inspection-item" data-item="5">
         <div class="item-header">
-          <div class="item-title">5. Roof General Housekeeping</div>
-          <div class="status-buttons">
-            <button type="button" class="status-btn pass" data-status="Pass">Pass</button>
-            <button type="button" class="status-btn fail" data-status="Fail">Fail</button>
-            <button type="button" class="status-btn na" data-status="N/A">N/A</button>
+          <div class="item-title">5. Roof General Housekeeping (கூரை பொது சுத்தம்)</div>
+          <div class="checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" name="item-5-pass" value="Pass"> Pass (தேர்ச்சி)
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="item-5-fail" value="Fail"> Fail (தோல்வி)
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="item-5-na" value="N/A"> N/A (பொருந்தாது)
+            </label>
           </div>
         </div>
-        <div class="task-description">Check general housekeeping of CCS area.</div>
+        <div class="task-description">Check general housekeeping of CCS area. (சி.சி.எஸ் பகுதியின் பொது சுத்தத்தைச் சோதிக்கவும்.)</div>
         <div class="field-group">
-          <label>Remarks:</label>
-          <textarea id="remarks-5" placeholder="Enter observations..."></textarea>
+          <label>Remarks (கருத்துகள்):</label>
+          <textarea id="remarks-5" placeholder="Enter observations... (கவனிப்புகளை உள்ளிடவும்...)"></textarea>
         </div>
         <div class="photo-section">
           <div class="photo-section-header">
-            <span class="photo-section-title">Photos & Comments:</span>
-            <button type="button" class="btn-add-photo" onclick="addPhoto(5)">+ Add Photo</button>
+            <span class="photo-section-title">Photos & Comments (புகைப்படங்கள் மற்றும் கருத்துகள்):</span>
+            <button type="button" class="btn-add-photo" onclick="addPhoto(5)">+ Add Photo (புகைப்படம் சேர்க்க)</button>
           </div>
           <div id="photos-5"></div>
         </div>
@@ -644,22 +665,28 @@
       <!-- Item 6: Riser / Common Corridors -->
       <div class="inspection-item" data-item="6">
         <div class="item-header">
-          <div class="item-title">6. Riser / Common Corridors</div>
-          <div class="status-buttons">
-            <button type="button" class="status-btn pass" data-status="Pass">Pass</button>
-            <button type="button" class="status-btn fail" data-status="Fail">Fail</button>
-            <button type="button" class="status-btn na" data-status="N/A">N/A</button>
+          <div class="item-title">6. Riser / Common Corridors (ரைசர் / பொது நடைபாதைகள்)</div>
+          <div class="checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" name="item-6-pass" value="Pass"> Pass (தேர்ச்சி)
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="item-6-fail" value="Fail"> Fail (தோல்வி)
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="item-6-na" value="N/A"> N/A (பொருந்தாது)
+            </label>
           </div>
         </div>
-        <div class="task-description">Check riser and common corridor ceilings for leakages, condensation and insulation damages.</div>
+        <div class="task-description">Check riser and common corridor ceilings for leakages, condensation and insulation damages. (லைசர் மற்றும் பொது நடைபாதை கூரைகளில் கசிவு, குளிர்ச்சி மற்றும் காப்பு சேதங்களைச் சோதிக்கவும்.)</div>
         <div class="field-group">
-          <label>Remarks:</label>
-          <textarea id="remarks-6" placeholder="Enter observations..."></textarea>
+          <label>Remarks (கருத்துகள்):</label>
+          <textarea id="remarks-6" placeholder="Enter observations... (கவனிப்புகளை உள்ளிடவும்...)"></textarea>
         </div>
         <div class="photo-section">
           <div class="photo-section-header">
-            <span class="photo-section-title">Photos & Comments:</span>
-            <button type="button" class="btn-add-photo" onclick="addPhoto(6)">+ Add Photo</button>
+            <span class="photo-section-title">Photos & Comments (புகைப்படங்கள் மற்றும் கருத்துகள்):</span>
+            <button type="button" class="btn-add-photo" onclick="addPhoto(6)">+ Add Photo (புகைப்படம் சேர்க்க)</button>
           </div>
           <div id="photos-6"></div>
         </div>
@@ -668,22 +695,28 @@
       <!-- Item 7: Ground Level Network Piping -->
       <div class="inspection-item" data-item="7">
         <div class="item-header">
-          <div class="item-title">7. Ground Level Network Piping</div>
-          <div class="status-buttons">
-            <button type="button" class="status-btn pass" data-status="Pass">Pass</button>
-            <button type="button" class="status-btn fail" data-status="Fail">Fail</button>
-            <button type="button" class="status-btn na" data-status="N/A">N/A</button>
+          <div class="item-title">7. Ground Level Network Piping (தரை மட்ட நெட்வொர்க் குழாய்)</div>
+          <div class="checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" name="item-7-pass" value="Pass"> Pass (தேர்ச்சி)
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="item-7-fail" value="Fail"> Fail (தோல்வி)
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="item-7-na" value="N/A"> N/A (பொருந்தாது)
+            </label>
           </div>
         </div>
-        <div class="task-description">Check network pipes for leakages, condensation and insulation damages.</div>
+        <div class="task-description">Check network pipes for leakages, condensation and insulation damages. (நெட்வொர்க் குழாய்களில் கசிவு, குளிர்ச்சி மற்றும் காப்பு சேதங்களைச் சோதிக்கவும்.)</div>
         <div class="field-group">
-          <label>Remarks:</label>
-          <textarea id="remarks-7" placeholder="Enter observations..."></textarea>
+          <label>Remarks (கருத்துகள்):</label>
+          <textarea id="remarks-7" placeholder="Enter observations... (கவனிப்புகளை உள்ளிடவும்...)"></textarea>
         </div>
         <div class="photo-section">
           <div class="photo-section-header">
-            <span class="photo-section-title">Photos & Comments:</span>
-            <button type="button" class="btn-add-photo" onclick="addPhoto(7)">+ Add Photo</button>
+            <span class="photo-section-title">Photos & Comments (புகைப்படங்கள் மற்றும் கருத்துகள்):</span>
+            <button type="button" class="btn-add-photo" onclick="addPhoto(7)">+ Add Photo (புகைப்படம் சேர்க்க)</button>
           </div>
           <div id="photos-7"></div>
         </div>
@@ -692,33 +725,33 @@
     </div>
     
     <div class="additional-remarks">
-      <label for="additional-remarks">Additional Remarks (If any):</label>
-      <textarea id="additional-remarks" placeholder="Enter any additional observations or notes..."></textarea>
+      <label for="additional-remarks">Additional Remarks (If any) (கூடுதல் கருத்துகள் (ஏதேனும் இருந்தால்)):</label>
+      <textarea id="additional-remarks" placeholder="Enter any additional observations or notes... (கூடுதல் கவனிப்புகள் அல்லது குறிப்புகளை உள்ளிடவும்...)"></textarea>
     </div>
     
     <div class="signature-section">
       <div class="signature-grid">
         <div class="signature-field">
-          <label>Reported by:</label>
-          <input type="text" id="reported-by" placeholder="Full Name">
+          <label>Reported by (அறிக்கையிட்டவர்):</label>
+          <input type="text" id="reported-by" placeholder="Full Name (முழு பெயர்)">
         </div>
         <div class="signature-field">
-          <label>Digital Signature:</label>
+          <label>Digital Signature (டிஜிட்டல் கையொப்பம்):</label>
           <div class="signature-canvas-wrapper">
             <canvas id="signature-canvas" class="signature-canvas"></canvas>
           </div>
           <div class="signature-actions">
-            <button type="button" class="btn-clear-signature" onclick="clearSignature()">️ Clear Signature</button>
+            <button type="button" class="btn-clear-signature" onclick="clearSignature()">🗑️ Clear Signature (கையொப்பத்தை அழிக்க)</button>
           </div>
           <div id="signature-confirmation" class="signature-confirmation">
-            ✅ Signature captured successfully
+            ✅ Signature captured successfully (கையொப்பம் வெற்றிகரமாகப் பதிவு செய்யப்பட்டது)
           </div>
         </div>
       </div>
     </div>
     
     <div class="action-buttons">
-      <button type="button" class="btn btn-print" onclick="window.print()">🖨️ Print to PDF</button>
+      <button type="button" class="btn btn-print" onclick="window.print()">🖨️ Print to PDF (PDF ஆக அச்சிட)</button>
     </div>
     
     <div id="status"></div>
@@ -728,20 +761,29 @@
     // Initialize datetime
     document.getElementById('datetime').value = new Date().toISOString().slice(0, 16);
     
-    // Chiller Block Yes/No selector
-    function selectChillerBlock(btn) {
-      const container = document.getElementById('chiller-block-selection');
-      container.querySelectorAll('.status-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-    }
+    // Chiller Block checkbox handler - ensure only one is selected
+    document.querySelectorAll('#chiller-block-selection input[type="checkbox"]').forEach(checkbox => {
+      checkbox.addEventListener('change', function() {
+        if (this.checked) {
+          const groupName = this.name;
+          document.querySelectorAll(`#chiller-block-selection input[type="checkbox"][name="${groupName}"]`).forEach(cb => {
+            if (cb !== this) cb.checked = false;
+          });
+        }
+      });
+    });
     
-    // Status button handlers for inspection items
-    document.querySelectorAll('.inspection-item .status-buttons').forEach(buttonGroup => {
-      const buttons = buttonGroup.querySelectorAll('.status-btn');
-      buttons.forEach(btn => {
-        btn.addEventListener('click', function() {
-          buttons.forEach(b => b.classList.remove('active'));
-          this.classList.add('active');
+    // Inspection item checkbox handlers - ensure only one status per item
+    document.querySelectorAll('.inspection-item').forEach(item => {
+      const checkboxes = item.querySelectorAll('.checkbox-group input[type="checkbox"]');
+      checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+          if (this.checked) {
+            // Uncheck other checkboxes in the same group
+            checkboxes.forEach(cb => {
+              if (cb !== this) cb.checked = false;
+            });
+          }
         });
       });
     });
@@ -764,7 +806,7 @@
           <label class="photo-upload-label">
             <input type="file" class="photo-upload-input" accept="image/*" data-item="${itemNum}" data-photo="${photoNum}" onchange="handlePhotoUpload(this)">
             <div class="upload-icon">📷</div>
-            <div class="upload-text">Click to upload photo</div>
+            <div class="upload-text">Click to upload photo (புகைப்படம் பதிவேற்ற கிளிக் செய்யவும்)</div>
           </label>
         </div>
         <div class="photo-preview">
@@ -772,8 +814,8 @@
           <div class="photo-info"></div>
         </div>
         <div class="photo-comment">
-          <label>Photo Comment:</label>
-          <textarea class="photo-comment-input" placeholder="Describe this photo..." rows="2"></textarea>
+          <label>Photo Comment (புகைப்பட கருத்து):</label>
+          <textarea class="photo-comment-input" placeholder="Describe this photo... (இந்த புகைப்படத்தை விவரிக்கவும்...)" rows="2"></textarea>
         </div>
       `;
       
@@ -791,7 +833,7 @@
       const photoInfo = preview.querySelector('.photo-info');
       
       photoInfo.className = 'photo-info compressing';
-      photoInfo.textContent = '🔄 Compressing...';
+      photoInfo.textContent = '🔄 Compressing... (சுருக்கப்படுகிறது...)';
       preview.style.display = 'block';
       
       try {
