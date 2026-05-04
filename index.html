@@ -485,10 +485,6 @@
       .photo-entry { break-inside: avoid; }
       .photo-upload-input { display: none !important; }
       .inspection-item { break-inside: avoid; }
-      
-      /* Show English, hide Tamil during print */
-      .tamil-text { display: none !important; }
-      .english-text { display: inline !important; }
     }
     
     @media (max-width: 768px) {
@@ -531,18 +527,10 @@
           <span class="english-text">District</span><span class="tamil-text">மாவட்டம்</span>
         </label>
         <select id="district">
-          <option value="">
-            <span class="english-text">Select District</span><span class="tamil-text">மாவட்டத்தைத் தேர்ந்தெடுக்கவும்</span>
-          </option>
-          <option value="Plantation">
-            <span class="english-text">Plantation</span><span class="tamil-text">தோட்டம்</span>
-          </option>
-          <option value="Garden">
-            <span class="english-text">Garden</span><span class="tamil-text">தோட்டம்</span>
-          </option>
-          <option value="Park">
-            <span class="english-text">Park</span><span class="tamil-text">பூங்கா</span>
-          </option>
+          <option value="" data-en="Select District" data-ta="மாவட்டத்தைத் தேர்ந்தெடுக்கவும்">Select District</option>
+          <option value="Plantation" data-en="Plantation" data-ta="தோட்டம்">Plantation</option>
+          <option value="Garden" data-en="Garden" data-ta="தோட்டம்">Garden</option>
+          <option value="Park" data-en="Park" data-ta="பூங்கா">Park</option>
         </select>
       </div>
       <div class="info-field">
@@ -625,10 +613,7 @@
               <span class="english-text">Photos & Comments</span>
               <span class="tamil-text">புகைப்படங்கள் மற்றும் கருத்துகள்</span>
             </span>
-            <button type="button" class="btn-add-photo" onclick="addPhoto(1)">
-              <span class="english-text">+ Add Photo</span>
-              <span class="tamil-text">+ புகைப்படம் சேர்க்க</span>
-            </button>
+            <button type="button" class="btn-add-photo" onclick="addPhoto(1)" data-en="+ Add Photo" data-ta="+ புகைப்படம் சேர்க்க">+ Add Photo</button>
           </div>
           <div id="photos-1"></div>
         </div>
@@ -671,10 +656,7 @@
               <span class="english-text">Photos & Comments</span>
               <span class="tamil-text">புகைப்படங்கள் மற்றும் கருத்துகள்</span>
             </span>
-            <button type="button" class="btn-add-photo" onclick="addPhoto(2)">
-              <span class="english-text">+ Add Photo</span>
-              <span class="tamil-text">+ புகைப்படம் சேர்க்க</span>
-            </button>
+            <button type="button" class="btn-add-photo" onclick="addPhoto(2)" data-en="+ Add Photo" data-ta="+ புகைப்படம் சேர்க்க">+ Add Photo</button>
           </div>
           <div id="photos-2"></div>
         </div>
@@ -717,10 +699,7 @@
               <span class="english-text">Photos & Comments</span>
               <span class="tamil-text">புகைப்படங்கள் மற்றும் கருத்துகள்</span>
             </span>
-            <button type="button" class="btn-add-photo" onclick="addPhoto(3)">
-              <span class="english-text">+ Add Photo</span>
-              <span class="tamil-text">+ புகைப்படம் சேர்க்க</span>
-            </button>
+            <button type="button" class="btn-add-photo" onclick="addPhoto(3)" data-en="+ Add Photo" data-ta="+ புகைப்படம் சேர்க்க">+ Add Photo</button>
           </div>
           <div id="photos-3"></div>
         </div>
@@ -763,10 +742,7 @@
               <span class="english-text">Photos & Comments</span>
               <span class="tamil-text">புகைப்படங்கள் மற்றும் கருத்துகள்</span>
             </span>
-            <button type="button" class="btn-add-photo" onclick="addPhoto(4)">
-              <span class="english-text">+ Add Photo</span>
-              <span class="tamil-text">+ புகைப்படம் சேர்க்க</span>
-            </button>
+            <button type="button" class="btn-add-photo" onclick="addPhoto(4)" data-en="+ Add Photo" data-ta="+ புகைப்படம் சேர்க்க">+ Add Photo</button>
           </div>
           <div id="photos-4"></div>
         </div>
@@ -809,10 +785,7 @@
               <span class="english-text">Photos & Comments</span>
               <span class="tamil-text">புகைப்படங்கள் மற்றும் கருத்துகள்</span>
             </span>
-            <button type="button" class="btn-add-photo" onclick="addPhoto(5)">
-              <span class="english-text">+ Add Photo</span>
-              <span class="tamil-text">+ புகைப்படம் சேர்க்க</span>
-            </button>
+            <button type="button" class="btn-add-photo" onclick="addPhoto(5)" data-en="+ Add Photo" data-ta="+ புகைப்படம் சேர்க்க">+ Add Photo</button>
           </div>
           <div id="photos-5"></div>
         </div>
@@ -855,10 +828,7 @@
               <span class="english-text">Photos & Comments</span>
               <span class="tamil-text">புகைப்படங்கள் மற்றும் கருத்துகள்</span>
             </span>
-            <button type="button" class="btn-add-photo" onclick="addPhoto(6)">
-              <span class="english-text">+ Add Photo</span>
-              <span class="tamil-text">+ புகைப்படம் சேர்க்க</span>
-            </button>
+            <button type="button" class="btn-add-photo" onclick="addPhoto(6)" data-en="+ Add Photo" data-ta="+ புகைப்படம் சேர்க்க">+ Add Photo</button>
           </div>
           <div id="photos-6"></div>
         </div>
@@ -901,10 +871,7 @@
               <span class="english-text">Photos & Comments</span>
               <span class="tamil-text">புகைப்படங்கள் மற்றும் கருத்துகள்</span>
             </span>
-            <button type="button" class="btn-add-photo" onclick="addPhoto(7)">
-              <span class="english-text">+ Add Photo</span>
-              <span class="tamil-text">+ புகைப்படம் சேர்க்க</span>
-            </button>
+            <button type="button" class="btn-add-photo" onclick="addPhoto(7)" data-en="+ Add Photo" data-ta="+ புகைப்படம் சேர்க்க">+ Add Photo</button>
           </div>
           <div id="photos-7"></div>
         </div>
@@ -936,10 +903,7 @@
             <canvas id="signature-canvas" class="signature-canvas"></canvas>
           </div>
           <div class="signature-actions">
-            <button type="button" class="btn-clear-signature" onclick="clearSignature()">
-              <span class="english-text">🗑️ Clear Signature</span>
-              <span class="tamil-text">🗑️ கையொப்பத்தை அழிக்க</span>
-            </button>
+            <button type="button" class="btn-clear-signature" onclick="clearSignature()" data-en="🗑️ Clear Signature" data-ta="🗑️ கையொப்பத்தை அழிக்க">🗑️ Clear Signature</button>
           </div>
           <div id="signature-confirmation" class="signature-confirmation">
             <span class="english-text">✅ Signature captured successfully</span>
@@ -950,10 +914,7 @@
     </div>
     
     <div class="action-buttons">
-      <button type="button" class="btn btn-print" onclick="window.print()">
-        <span class="english-text">🖨️ Print to PDF</span>
-        <span class="tamil-text">🖨️ PDF ஆக அச்சிட</span>
-      </button>
+      <button type="button" class="btn btn-print" onclick="window.print()" data-en="🖨️ Print to PDF" data-ta="🖨️ PDF ஆக அச்சிட">🖨️ Print to PDF</button>
     </div>
     
     <div id="status"></div>
@@ -965,6 +926,16 @@
       document.body.className = `lang-${lang}`;
       document.getElementById('btn-english').classList.toggle('active', lang === 'english');
       document.getElementById('btn-tamil').classList.toggle('active', lang === 'tamil');
+      
+      // Update all elements with data-en and data-ta attributes
+      document.querySelectorAll('[data-en][data-ta]').forEach(el => {
+        el.textContent = lang === 'tamil' ? el.getAttribute('data-ta') : el.getAttribute('data-en');
+      });
+      
+      // Update select options
+      document.querySelectorAll('select option[data-en][data-ta]').forEach(option => {
+        option.textContent = lang === 'tamil' ? option.getAttribute('data-ta') : option.getAttribute('data-en');
+      });
     }
     
     // Initialize datetime
@@ -1004,20 +975,23 @@
       photoCounters[itemNum]++;
       const container = document.getElementById(`photos-${itemNum}`);
       const photoNum = photoCounters[itemNum];
+      const currentLang = document.body.classList.contains('lang-tamil') ? 'tamil' : 'english';
       
       const photoEntry = document.createElement('div');
       photoEntry.className = 'photo-entry';
       photoEntry.dataset.photoId = `${itemNum}-${photoNum}`;
+      
+      const uploadText = currentLang === 'tamil' ? 'புகைப்படம் பதிவேற்ற கிளிக் செய்யவும்' : 'Click to upload photo';
+      const photoCommentLabel = currentLang === 'tamil' ? 'புகைப்பட கருத்து' : 'Photo Comment';
+      const photoCommentPlaceholder = currentLang === 'tamil' ? 'இந்த புகைப்படத்தை விவரிக்கவும்...' : 'Describe this photo...';
+      
       photoEntry.innerHTML = `
         <button type="button" class="btn-remove-photo" onclick="this.parentElement.remove()">×</button>
         <div class="photo-upload-wrapper">
           <label class="photo-upload-label">
             <input type="file" class="photo-upload-input" accept="image/*" data-item="${itemNum}" data-photo="${photoNum}" onchange="handlePhotoUpload(this)">
             <div class="upload-icon">📷</div>
-            <div class="upload-text">
-              <span class="english-text">Click to upload photo</span>
-              <span class="tamil-text">புகைப்படம் பதிவேற்ற கிளிக் செய்யவும்</span>
-            </div>
+            <div class="upload-text">${uploadText}</div>
           </label>
         </div>
         <div class="photo-preview">
@@ -1025,10 +999,8 @@
           <div class="photo-info"></div>
         </div>
         <div class="photo-comment">
-          <label>
-            <span class="english-text">Photo Comment</span><span class="tamil-text">புகைப்பட கருத்து</span>:
-          </label>
-          <textarea class="photo-comment-input" placeholder="Describe this photo..." rows="2"></textarea>
+          <label>${photoCommentLabel}:</label>
+          <textarea class="photo-comment-input" placeholder="${photoCommentPlaceholder}" rows="2"></textarea>
         </div>
       `;
       
@@ -1044,9 +1016,12 @@
       const preview = photoEntry.querySelector('.photo-preview');
       const previewImg = preview.querySelector('img');
       const photoInfo = preview.querySelector('.photo-info');
+      const currentLang = document.body.classList.contains('lang-tamil') ? 'tamil' : 'english';
+      
+      const compressingText = currentLang === 'tamil' ? '🔄 சுருக்கப்படுகிறது...' : '🔄 Compressing...';
       
       photoInfo.className = 'photo-info compressing';
-      photoInfo.innerHTML = `<span class="english-text">🔄 Compressing...</span><span class="tamil-text">🔄 சுருக்கப்படுகிறது...</span>`;
+      photoInfo.textContent = compressingText;
       preview.style.display = 'block';
       
       try {
